@@ -7,6 +7,14 @@ void Player::Initialize(Model* model, const Vector3& position) {
 	worldTransform_.Initialize();
 	worldTransform_.translation_ = position;
 	WorldMatrix::UpdateWorldMatrix(worldTransform_);
+
+	noseTransform_.Initialize();
+	noseTransform_.scale_ = { 0.25f, 0.25f, 0.25f };
+
+	bodyColor_.Initialize();
+	bodyColor_.SetColor({ 0.3f, 0.9f, 0.4f, 1.0f }); // 緑
+	noseColor_.Initialize();
+	noseColor_.SetColor({ 1.0f, 1.0f, 1.0f, 1.0f }); // 白
 }
 
 void Player::Update(const Vector3& aimPos) {
@@ -43,8 +51,16 @@ void Player::Update(const Vector3& aimPos) {
 	}
 
 	WorldMatrix::UpdateWorldMatrix(worldTransform_);
+
+	// 向きの目印は、狙っている方向の少し前に置く
+	noseTransform_.translation_ = {
+		worldTransform_.translation_.x + aimDirection_.x * kNoseDistance,
+		worldTransform_.translation_.y,
+		worldTransform_.translation_.z + aimDirection_.z * kNoseDistance };
+	WorldMatrix::UpdateWorldMatrix(noseTransform_);
 }
 
-void Player::Draw(const Camera& camera) { 
-	model_->Draw(worldTransform_, camera); 
+void Player::Draw(const Camera& camera) {
+	model_->Draw(worldTransform_, camera, &bodyColor_);
+	model_->Draw(noseTransform_, camera, &noseColor_);
 }

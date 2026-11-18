@@ -3,34 +3,30 @@
 
 using namespace KamataEngine;
 
+// プレイヤーを追いかける敵。泡に閉じ込められている間は動かない(描画は泡の中で行う)
 class Enemy {
 public:
-	static constexpr float kRadius = 0.8f;			// 通常時の当たり判定
-	static constexpr float kTrappedRadius = 1.4f;	// 泡に入っているときの当たり判定
+	static constexpr float kRadius = 0.8f;
+	static constexpr float kMass = 1.0f; // 重さ(泡の重さは、中の敵の合計)
 
 	void Initialize(Model* model, const Vector3& position);
 	void Update(const Vector3& targetPos);
 	void Draw(const Camera& camera);
 
-	void Trap();
 	void Kill() { isDead_ = true; }
+	void SetCaptured(bool captured) { isCaptured_ = captured; }
+	void SetPosition(const Vector3& position); // 行列も更新する
 
-	bool IsTrapped() const { return isTrapped_; }
 	bool IsDead() const { return isDead_; }
-	float GetRadius() const { return isTrapped_ ? kTrappedRadius : kRadius; }
+	bool IsCaptured() const { return isCaptured_; }
 	const Vector3& GetPosition() const { return worldTransform_.translation_; }
 
 private:
-	static constexpr float kMoveSpeed = 0.08f;	// 追いかける速さ
-	static constexpr int kTrapFrames = 300;		// 閉じ込められている時間
-	static constexpr float kFloatHeight = 0.3f;	// 浮かぶ上下幅
+	static constexpr float kMoveSpeed = 0.08f; // 追いかける速さ(プレイヤーより遅い)
 
 	Model* model_ = nullptr;
-	WorldTransform worldTransform_;	// 敵本体
-	WorldTransform shellTransform_;	// 閉じ込めている泡
-
-	bool isTrapped_ = false;
+	WorldTransform worldTransform_;
+	ObjectColor color_;
+	bool isCaptured_ = false; // 泡に入っているか(入っている間は動かない)
 	bool isDead_ = false;
-	int trapTimer_ = 0;
-	float floatPhase_ = 0.0f;
 };

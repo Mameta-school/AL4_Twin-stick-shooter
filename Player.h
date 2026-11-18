@@ -14,8 +14,12 @@ public:
 
 private:
 	static constexpr float kMoveSpeed = 0.2f;	// 移動速度
+	static constexpr float kNoseDistance = 1.1f;	// 向きを示す目印までの距離
 
 	Model* model_ = nullptr;
 	WorldTransform worldTransform_;
+	WorldTransform noseTransform_; // 向きを示す小さな目印
+	ObjectColor bodyColor_;
+	ObjectColor noseColor_;
 	Vector3 aimDirection_ = { 0.0f, 0.0f, 1.0f };	// 狙う方向
 };

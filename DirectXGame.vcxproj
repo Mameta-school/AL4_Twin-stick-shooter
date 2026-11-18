@@ -180,18 +180,22 @@ xcopy "$(ProjectDir)..\External\KamataEngine\shaders" "$(ProjectDir)Resources\En
   <ItemGroup>
     <ClCompile Include="Bubble.cpp" />
     <ClCompile Include="Enemy.cpp" />
+    <ClCompile Include="EnemyBubble.cpp" />
     <ClCompile Include="GameScene.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="MathUtility.cpp" />
     <ClCompile Include="Player.cpp" />
+    <ClCompile Include="PopBullet.cpp" />
     <ClCompile Include="WorldMatrix.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Bubble.h" />
     <ClInclude Include="Enemy.h" />
+    <ClInclude Include="EnemyBubble.h" />
     <ClInclude Include="GameScene.h" />
     <ClInclude Include="MathUtility.h" />
     <ClInclude Include="Player.h" />
+    <ClInclude Include="PopBullet.h" />
     <ClInclude Include="WorldMatrix.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
